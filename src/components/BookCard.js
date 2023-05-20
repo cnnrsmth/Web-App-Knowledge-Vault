@@ -1,6 +1,7 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAmazon } from "@fortawesome/free-brands-svg-icons";
+import { Link } from "react-router-dom";
 
 const BookCard = ({ book }) => {
   return (
@@ -20,12 +21,12 @@ const BookCard = ({ book }) => {
           <p className="mt-2 text-gray-600 font-roboto">{book.summary}</p>
         </div>
         <div className="flex items-center justify-center md:justify-end space-x-4 mt-4">
-          <button
-            type="submit"
-            className="py-2 px-3 text-xs font-medium text-center text-white rounded-lg border cursor-pointer bg-primaryblue border-primary-600 hover:bg-secondaryblue"
+          <Link
+            to={`/books/${book.id}`}
+            className="text-white rounded-lg border cursor-pointer bg-primaryblue border-primary-600 hover:bg-secondaryblue py-2 px-3 text-xs font-medium text-center"
           >
             Notes
-          </button>
+          </Link>
           <a href={book.amazon_link} target="_blank">
             <FontAwesomeIcon
               icon={faAmazon}

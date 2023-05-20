@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Books from "./components/Books";
 import BookDetails from "./components/BookDetails";
+import bookData from "./data/books.json";
 
 function App() {
   return (
@@ -11,7 +12,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/" element={<Books />} />
-          <Route path="/books/:id" element={<BookDetails />} />
+          <Route path="/books/:id" element={<BookDetails books={bookData} />} />
         </Routes>
       </div>
     </Router>
