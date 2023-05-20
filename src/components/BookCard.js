@@ -26,10 +26,12 @@ const BookCard = ({ book }) => {
           >
             Notes
           </button>
-          <FontAwesomeIcon
-            icon={faAmazon}
-            className="text-darkgrey text-lg sm:text-xl transition-colors duration-100 hover:text-primaryblue"
-          />
+          <a href={book.amazon_link} target="_blank">
+            <FontAwesomeIcon
+              icon={faAmazon}
+              className="self-center text-darkgrey text-lg sm:text-xl transition-colors duration-100 hover:text-primaryblue"
+            />
+          </a>
         </div>
       </div>
     </div>
