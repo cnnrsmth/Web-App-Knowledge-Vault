@@ -8,7 +8,7 @@ import bookData from "./data/books.json";
 function App() {
   return (
     <Router>
-      <div className="App">
+      <div className="App lg:px-8">
         <Navbar />
         <Routes>
           <Route path="/" element={<Books />} />

@@ -1,50 +1,38 @@
 import React from "react";
-import TakeawayCard from "./TakeawayCard";
 import { useParams } from "react-router-dom";
+
+import TakeawayCard from "./TakeawayCard";
+import StarSystem from "./StarSystem";
+import QuoteCard from "./QuoteCard";
+import TakeawayPara from "./TakeawayPara";
+
 import goldStar from "../assets/gold.png";
 import fadedGoldStar from "../assets/fadedgold.png";
 
 const BookDetails = ({ books }) => {
   const { id } = useParams();
 
-  // Find the book with the matching id
   const book = books.find((book) => book.id === id);
 
-  // Render a message if the book is not found
   if (!book) {
     return <div>Book not found</div>;
   }
 
-  const renderStarRating = () => {
-    const rating = book.rating;
-    const fullStars = Math.floor(rating);
-    const fadedStars = 5 - Math.ceil(rating);
-
-    return (
-      <div className="flex items-center justify-center mt-4">
-        {[...Array(fullStars)].map((_, index) => (
-          <img
-            key={index}
-            src={goldStar}
-            alt="Gold Star"
-            className="w-6 h-6 mx-1"
-          />
-        ))}
-        {[...Array(fadedStars)].map((_, index) => (
-          <img
-            key={index}
-            src={fadedGoldStar}
-            alt="Faded Gold Star"
-            className="w-6 h-6 mx-1"
-          />
-        ))}
-      </div>
-    );
-  };
-
   const renderTakeawayCards = () => {
     return book.takeaways.map((takeaway, index) => (
       <TakeawayCard key={index} number={index + 1} takeaway={takeaway} />
+    ));
+  };
+
+  const renderQuoteCards = () => {
+    return book.quotes.map((quote, index) => (
+      <QuoteCard key={index} quote={quote} />
+    ));
+  };
+
+  const renderNotes = () => {
+    return Object.entries(book.notes).map(([key, value]) => (
+      <TakeawayPara key={key} takeaway={{ key, value }} />
     ));
   };
 
@@ -63,15 +51,25 @@ const BookDetails = ({ books }) => {
         <div className="flex justify-center py-4">
           <div className="w-1/4 bg-primaryblue h-1"></div>
         </div>
-        {renderStarRating()}
+        <StarSystem key={book.id} book={book} />
       </div>
       <div className="mx-auto w-2/3">
-        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-4 my-4">
+        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
           Key Takeaways
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {renderTakeawayCards()}
         </div>
+        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
+          Key Quotes
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {renderQuoteCards()}
+        </div>
+        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-4 mt-10">
+          Detailed Notes
+        </h1>
+        {renderNotes()}
       </div>
     </>
   );

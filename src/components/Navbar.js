@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-scroll";
+import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 
 import logocard from "../assets/logocard.png";
@@ -41,15 +41,19 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link
-                activeClass="active"
+                to="/"
                 className="text-darkgrey font-karla font-bold hover:bg-primaryblue hover:text-white px-3 py-2 rounded-md text-md"
-                smooth
-                spy
-                to="main"
-                style={{ cursor: "pointer" }}
               >
                 Back to Main
               </Link>
+              <a
+                href="https://cnnrsmth.github.io/cnnrsmth/#about"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-darkgrey font-karla font-bold hover:bg-primaryblue hover:text-white px-3 py-2 rounded-md text-md"
+              >
+                My Site
+              </a>
             </div>
           </div>
           {/* hamburger button */}
@@ -70,16 +74,21 @@ const Navbar = () => {
         <div className="md:hidden bg-white">
           <div className="ox-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
-              activeClass="active"
+              to="/"
               className="text-darkgrey hover:bg-primaryblue hover:bg-opacity-50 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-              smooth
-              spy
-              to="main"
               onClick={() => setOpen(false)}
-              style={{ cursor: "pointer" }}
             >
               Back to Main
             </Link>
+            <a
+              href="https://cnnrsmth.github.io/cnnrsmth/#about"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-darkgrey hover:bg-primaryblue hover:bg-opacity-50 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+              onClick={() => setOpen(false)}
+            >
+              My Site
+            </a>
           </div>
         </div>
       ) : null}
