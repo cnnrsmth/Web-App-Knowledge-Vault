@@ -11,7 +11,7 @@ function App() {
       <div className="App lg:px-8">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Books />} />
+          <Route path="/book-notes" element={<Books />} />
           <Route path="/books/:id" element={<BookDetails books={bookData} />} />
         </Routes>
       </div>

@@ -41,7 +41,7 @@ const Navbar = () => {
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
               <Link
-                to="/"
+                to="/book-notes"
                 className="text-darkgrey font-karla font-bold hover:bg-primaryblue hover:text-white px-3 py-2 rounded-md text-md"
               >
                 Back to Main
@@ -74,7 +74,7 @@ const Navbar = () => {
         <div className="md:hidden bg-white">
           <div className="ox-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
-              to="/"
+              to="/book-notes"
               className="text-darkgrey hover:bg-primaryblue hover:bg-opacity-50 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
               onClick={() => setOpen(false)}
             >
