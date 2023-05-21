@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/cnnrsmth/static/css/main.27f3fe65.css",
+    "main.js": "/cnnrsmth/static/js/main.913f21b1.js",
+    "static/media/logocard.png": "/cnnrsmth/static/media/logocard.e5c9eff17a14579a8161.png",
+    "static/media/quote.png": "/cnnrsmth/static/media/quote.4c2c194b90b131cebf47.png",
+    "index.html": "/cnnrsmth/index.html",
+    "main.27f3fe65.css.map": "/cnnrsmth/static/css/main.27f3fe65.css.map",
+    "main.913f21b1.js.map": "/cnnrsmth/static/js/main.913f21b1.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.27f3fe65.css",
+    "static/js/main.913f21b1.js"
+  ]
+}
