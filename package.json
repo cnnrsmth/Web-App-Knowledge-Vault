@@ -1,21 +1,31 @@
 {
-  "homepage": "http://cnnrsmth.github.io/book-notes",
-  "name": "book-notes",
+  "homepage": "http://cnnrsmth.github.io/cnnrsmth",
+  "name": "personal_website",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-scripts": "5.0.1",
+    "web-vitals": "^2.1.4",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "emailjs-com": "^3.2.0",
+    "jsonp": "^0.2.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.8.0",
-    "react-router-dom": "^6.11.2",
-    "react-scripts": "^5.0.1",
+    "react-router-dom": "^6.10.0",
     "react-scroll": "^1.8.9",
-    "web-vitals": "^2.1.4"
+    "react-slick": "^0.29.0",
+    "react-toastify": "^9.1.2",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -23,8 +33,7 @@
     "deploy": "gh-pages -d build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "dev": "nodemon index"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
@@ -46,7 +55,10 @@
   },
   "devDependencies": {
     "gh-pages": "^5.0.0",
-    "nodemon": "^2.0.22",
-    "tailwindcss": "^3.3.2"
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.3.1"
   }
 }
