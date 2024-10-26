@@ -1,12 +1,12 @@
 [
   {
     "id": "1",
+    "type": "book",
     "category": "Productivity",
     "image": "https://m.media-amazon.com/images/I/71DPD5QEZCL.jpg",
     "title": "4 Hour Work Week",
     "author": "Tim Ferriss",
     "summary": "A guide to escaping the 9-5 grind and joining the 'New Rich' by leveraging the power of outsourcing, automation, and time management.",
-    "amazon_link": "https://www.amazon.co.uk/4-Hour-Work-Week-Escape-Anywhere/dp/0091929113/ref=sr_1_1?crid=3L640H94CVMBE&keywords=4+Hour+Work+Week&qid=1684604685&sprefix=%2Caps%2C81&sr=8-1",
     "rating": 4,
     "takeaways": [
       "Outsource non-critical tasks",
@@ -24,12 +24,12 @@
   },
   {
     "id": "2",
+    "type": "book",
     "category": "Personal Development",
     "image": "https://m.media-amazon.com/images/I/61UIDFafg8L.jpg",
     "title": "Tools of Titans",
     "author": "Tim Ferriss",
     "summary": "Distilled wisdom from hundreds of successful individuals across a variety of disciplines, broken down into practical strategies and tactics.",
-    "amazon_link": "https://www.amazon.co.uk/Tools-Titans-Billionaires-World-Class-Performers/dp/B082VKL6VC/ref=sr_1_1?keywords=Tools+of+Titans&qid=1684604702&sr=8-1",
     "rating": 3,
     "takeaways": [
       "Incorporate successful habits into your routine",
@@ -45,12 +45,12 @@
   },
   {
     "id": "3",
+    "type": "book",
     "category": "Business",
     "image": "https://m.media-amazon.com/images/I/81vvgZqCskL.jpg",
     "title": "The Lean Startup",
     "author": "Eric Ries",
     "summary": "A guide to creating a successful startup through continuous product iteration and customer feedback.",
-    "amazon_link": "https://www.amazon.co.uk/Lean-Startup-Entrepreneurs-Continuous-Innovation/dp/B005MR4NCC/ref=sr_1_1?crid=37WI180ZKEFOV&keywords=The+Lean+Startup&qid=1684604717&s=audible&sprefix=the+lean+startup%2Caudible%2C63&sr=1-1",
     "rating": 5,
     "takeaways": [
       "Validate assumptions through the Build-Measure-Learn feedback loop",
@@ -66,12 +66,12 @@
   },
   {
     "id": "4",
+    "type": "book",
     "category": "Technology",
     "image": "https://m.media-amazon.com/images/I/81Ama8RVF9L.jpg",
     "title": "The Cold Start Problem",
     "author": "Andrew Chen",
     "summary": "An exploration of how tech startups overcome initial obstacles to find success in a marketplace dominated by established players.",
-    "amazon_link": "https://www.amazon.co.uk/Cold-Start-Problem-Network-Effects/dp/B09KW42M7V/ref=sr_1_1?crid=22HCBFIZDPTP0&keywords=The+Cold+Start+Problem&qid=1684604735&s=audible&sprefix=the+cold+start+problem%2Caudible%2C67&sr=1-1",
     "rating": 1,
     "takeaways": [
       "Overcome initial inertia through strategic growth hacking",
