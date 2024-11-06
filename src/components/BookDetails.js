@@ -1,5 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
+import BackButton from "./BackButton"; // Import BackButton
 
 import TakeawayCard from "./TakeawayCard";
 import StarSystem from "./StarSystem";
@@ -53,7 +54,11 @@ const BookDetails = ({ books }) => {
         </div>
         <StarSystem key={book.id} book={book} />
       </div>
-      <div className="mx-auto w-2/3">
+      <div className="absolute top-5 left-[calc(16%)] pt-4 pl-4 z-10">
+        <BackButton />
+      </div>
+      <div className="mx-auto w-2/3 relative">
+        {/* Rest of your code */}
         <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
           Key Takeaways
         </h1>
