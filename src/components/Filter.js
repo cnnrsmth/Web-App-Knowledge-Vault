@@ -5,15 +5,17 @@ function Filter({ toggleFilter, filter }) {
   const categories = ["All", ...new Set(data.map((item) => item.category))];
 
   return (
-    <div className="flex flex-wrap justify-center items-center space-x-4 space-y-4">
+    <div className="flex flex-wrap justify-center items-center space-x-2 space-y-2">
       {categories.map((category) => (
         <button
           key={category}
-          className={`font-karla bg-primaryblue border-primary-600 hover:bg-secondaryblue text-white text-sm rounded inline-flex items-center justify-center ${
-            filter.includes(category) ? "bg-secondaryblue" : ""
+          className={`font-karla border rounded-full transition-colors duration-200 px-4 py-2 text-sm ${
+            filter.includes(category)
+              ? "bg-black text-white font-bold border-black" // Selected state
+              : "bg-white text-black border-black hover:bg-gray-200" // Default with hover effect
           }`}
-          style={{ margin: "16px", padding: "10px" }}
           onClick={() => toggleFilter(category)}
+          style={{ lineHeight: "1.5", minHeight: "38px", margin: "4px" }}
         >
           {category}
         </button>

@@ -21,7 +21,7 @@ const BookCard = ({ book }) => {
         </div>
       </div>
       <div className="flex-grow text-center">
-        <div className="text-2xl text-primaryblue font-karla font-bold mb-4">
+        <div className="text-2xl text-black font-karla font-extrabold mb-4 uppercase">
           {book.title}
         </div>
         <p className="mt-2 text-gray-600 font-roboto">{book.summary}</p>

@@ -1,30 +1,41 @@
-import React, { useState, useEffect } from "react";
-
+import React, { useState } from "react";
 import BookCard from "../components/BookCard";
 import Filter from "./Filter";
 import booksData from "../data/books";
 
 const Books = () => {
-  const [books, setBooks] = useState([]);
   const [filter, setFilter] = useState(["All"]);
-
-  useEffect(() => {
-    setBooks(booksData);
-  }, []);
+  const categories = [
+    "All",
+    ...new Set(booksData.map((item) => item.category)),
+  ];
 
   const toggleFilter = (category) => {
     setFilter((prevFilter) => {
-      if (prevFilter.includes(category)) {
-        return prevFilter.filter((c) => c !== category);
+      if (category === "All") {
+        // Select or deselect "All"
+        return prevFilter.includes("All") ? [] : ["All"];
       } else {
-        return [...prevFilter, category];
+        if (prevFilter.includes("All")) {
+          // If "All" is selected and a sub-category is clicked, switch to that category only
+          return [category];
+        }
+
+        const updatedFilter = prevFilter.includes(category)
+          ? prevFilter.filter((c) => c !== category)
+          : [...prevFilter, category];
+
+        // Check if all categories are selected; if so, switch to "All"
+        return updatedFilter.length === categories.length - 1
+          ? ["All"]
+          : updatedFilter;
       }
     });
   };
 
   const filteredBooks = filter.includes("All")
-    ? books
-    : books.filter((book) => filter.includes(book.category));
+    ? booksData
+    : booksData.filter((book) => filter.includes(book.category));
 
   return (
     <div className="pt-40">
