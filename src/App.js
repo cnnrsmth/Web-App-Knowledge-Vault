@@ -7,7 +7,7 @@ import bookData from "./data/books.json";
 function App() {
   return (
     <Router>
-      <div className="App lg:px-8">
+      <div className="App">
         <Routes>
           <Route path="/book-notes" element={<Books />} />
           <Route path="/books/:id" element={<BookDetails books={bookData} />} />
