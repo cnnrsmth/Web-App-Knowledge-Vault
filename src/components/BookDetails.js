@@ -8,63 +8,83 @@ import TakeawayPara from "./TakeawayPara";
 
 const BookDetails = ({ books }) => {
   const { id } = useParams();
-
   const book = books.find((book) => book.id === id);
 
   if (!book) {
     return <div>Book not found</div>;
   }
 
-  // Debugging: Check the takeaways array
-  console.log("Takeaways Array:", book.takeaways);
-
-  // Function to render Takeaway Cards
   const renderTakeawayCards = () => {
     const takeaways = book.takeaways;
     const rows = [];
     let i = 0;
     let rowIndex = 0;
 
-    // Iterate through takeaways and construct rows with alternating card numbers (3 and 2)
     while (i < takeaways.length) {
       if (rowIndex % 2 === 0) {
-        // For even rows, push 3 cards (or less if near the end)
         rows.push(takeaways.slice(i, i + 3));
         i += 3;
       } else {
-        // For odd rows, push 2 cards (or less if near the end)
         rows.push(takeaways.slice(i, i + 2));
         i += 2;
       }
-      rowIndex += 1; // Increase the row index to toggle between 3 and 2 cards
+      rowIndex += 1;
     }
-
-    console.log("Rows after processing:", rows); // Log rows for debugging
 
     return rows.map((row, rowIndex) => (
       <div
         key={rowIndex}
         className={`grid gap-4 ${
           row.length === 2
-            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-2"
-            : "grid-cols-3"
+            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+            : "grid-cols-1 md:grid-cols-3"
         }`}
       >
         {row.map((takeaway, index) => (
-          <TakeawayCard key={index} number={index + 1} takeaway={takeaway} />
+          <TakeawayCard
+            key={index}
+            number={index + 1}
+            takeaway={takeaway}
+            className="border border-white rounded-lg p-4 transition-colors duration-200 hover:bg-gray-200" // Lighter border
+          />
         ))}
       </div>
     ));
   };
 
-  // Function to render Quote Cards
   const renderQuoteCards = () => {
-    return book.quotes.map((quote, index) => (
-      <QuoteCard key={index} quote={quote} />
+    const quotes = book.quotes;
+    const rows = [];
+    let i = 0;
+    let rowIndex = 0;
+
+    while (i < quotes.length) {
+      if (rowIndex % 2 === 0) {
+        rows.push(quotes.slice(i, i + 3));
+        i += 3;
+      } else {
+        rows.push(quotes.slice(i, i + 2));
+        i += 2;
+      }
+      rowIndex += 1;
+    }
+
+    return rows.map((row, rowIndex) => (
+      <div
+        key={rowIndex}
+        className={`grid gap-4 ${
+          row.length === 2
+            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+            : "grid-cols-1 md:grid-cols-3"
+        }`}
+      >
+        {row.map((quote, index) => (
+          <QuoteCard key={index} quote={quote} />
+        ))}
+      </div>
     ));
   };
 
-  // Function to render Notes
   const renderNotes = () => {
     return Object.entries(book.notes).map(([key, value]) => (
       <TakeawayPara key={key} takeaway={{ key, value }} />
@@ -84,7 +104,7 @@ const BookDetails = ({ books }) => {
         </h1>
         <p className="font-roboto my-4">{book.summary}</p>
         <div className="flex justify-center py-4">
-          <div className="w-1/4 bg-primaryblue h-1"></div>
+          <div className="w-1/4 bg-black h-1"></div>
         </div>
         <StarSystem key={book.id} book={book} />
       </div>
@@ -93,12 +113,12 @@ const BookDetails = ({ books }) => {
       </div>
 
       {/* Black Background Wrapper for Key Takeaways and Key Quotes */}
-      <div className="relative">
+      <div className="">
         <div
-          className="text-white py-16 mx-auto max-w-screen-xl px-4"
-          style={{ backgroundColor: "#191C1F" }}
+          className="text-white py-16 w-full px-4 md:px-20 lg:px-60"
+          style={{ backgroundColor: "#0A0A0A" }}
         >
-          <div className="px-20">
+          <div className="px-4 md:px-10 lg:px-20">
             <h1 className="font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
               Key Takeaways
             </h1>
@@ -106,15 +126,13 @@ const BookDetails = ({ books }) => {
             <h1 className="font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
               Key Quotes
             </h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {renderQuoteCards()} {/* Render Quote Cards */}
-            </div>
+            {renderQuoteCards()} {/* Render Quote Cards */}
           </div>
         </div>
       </div>
 
       {/* Separate Detailed Notes Section */}
-      <div className="mx-auto max-w-screen-xl px-24 mt-10 relative">
+      <div className="mx-auto max-w-screen-xl px-4 md:px-10 lg:px-20 mt-10 relative">
         <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-4">
           Detailed Notes
         </h1>
