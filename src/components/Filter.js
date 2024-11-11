@@ -9,15 +9,15 @@ function Filter({ toggleFilter, filter }) {
       {categories.map((category) => (
         <button
           key={category}
-          className={`font-karla border rounded-full transition-colors duration-200 px-4 py-2 text-sm ${
+          className={`font-karla text-lg font-medium border rounded-full transition-colors duration-200 px-6 py-3 ${
             filter.includes(category)
-              ? "bg-white text-black font-bold border-black" // Selected state: white background, black text
-              : "border-gray-500 hover:bg-gray-400" // Default with hover effect
+              ? "bg-white text-black font-bold border-black" // Selected state
+              : "border-gray-500 hover:bg-gray-600 hover:text-gray-100" // Default state
           }`}
           onClick={() => toggleFilter(category)}
           style={{
-            backgroundColor: filter.includes(category) ? "#FFFFFF" : "#2A2A2A", // Default background color when not selected
-            color: filter.includes(category) ? "#000000" : "#FFFFFF", // Default text color when not selected
+            backgroundColor: filter.includes(category) ? "#FFFFFF" : "#2A2A2A",
+            color: filter.includes(category) ? "#000000" : "#B0B0B0",
             lineHeight: "1.5",
             minHeight: "38px",
             margin: "4px",

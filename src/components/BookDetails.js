@@ -4,7 +4,7 @@ import BackButton from "./BackButton";
 import TakeawayCard from "./TakeawayCard";
 import StarSystem from "./StarSystem";
 import QuoteCard from "./QuoteCard";
-import TakeawayPara from "./TakeawayPara";
+import DetailedNotes from "./DetailedNotes";
 
 const BookDetails = ({ books }) => {
   const { id } = useParams();
@@ -45,7 +45,7 @@ const BookDetails = ({ books }) => {
             key={index}
             number={index + 1}
             takeaway={takeaway}
-            className="border border-white rounded-lg p-4 transition-colors duration-200 hover:bg-gray-200" // Lighter border
+            className="border border-white rounded-lg p-4 transition-colors duration-200 hover:bg-gray-200"
           />
         ))}
       </div>
@@ -85,24 +85,19 @@ const BookDetails = ({ books }) => {
     ));
   };
 
-  const renderNotes = () => {
-    return Object.entries(book.notes).map(([key, value]) => (
-      <TakeawayPara key={key} takeaway={{ key, value }} />
-    ));
-  };
-
   return (
     <>
-      <div className="pt-40 py-16 mx-auto text-center md:w-1/3 w-full">
+      <div className="pt-40 py-16 mx-auto text-center md:w-1/3 w-2/3">
         <img
           src={book.image}
           alt={book.title}
           className="rounded-lg object-cover h-[30vh] mx-auto my-4"
         />
-        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl py-4 lg:ml-0 my-4">
+        <h1 className="text-darkgrey font-karla font-bold text-3xl md:text-4xl py-4 lg:ml-0 my-4">
           {book.title} - Summary with Notes and Highlights
         </h1>
-        <p className="font-roboto my-4">{book.summary}</p>
+        <p className="font-karla text-xl md:text-2xl my-4">{book.summary}</p>{" "}
+        {/* Updated to larger text */}
         <div className="flex justify-center py-4">
           <div className="w-1/4 bg-black h-1"></div>
         </div>
@@ -112,31 +107,28 @@ const BookDetails = ({ books }) => {
         <BackButton />
       </div>
 
-      {/* Black Background Wrapper for Key Takeaways and Key Quotes */}
-      <div className="">
-        <div
-          className="text-white py-16 w-full px-4 md:px-20 lg:px-60"
-          style={{ backgroundColor: "#0A0A0A" }}
-        >
-          <div className="px-4 md:px-10 lg:px-20">
-            <h1 className="font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
-              Key Takeaways
-            </h1>
-            {renderTakeawayCards()} {/* Render Takeaway Cards */}
-            <h1 className="font-karla font-bold text-2xl md:text-3xl pb-8 mt-10">
-              Key Quotes
-            </h1>
-            {renderQuoteCards()} {/* Render Quote Cards */}
-          </div>
+      <div
+        className="text-white py-16 w-full px-4 md:px-20 lg:px-60"
+        style={{ backgroundColor: "#0A0A0A" }}
+      >
+        <div className="px-4 md:px-10 lg:px-20">
+          <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
+            Key Takeaways
+          </h1>
+          {renderTakeawayCards()}
+          <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
+            Key Quotes
+          </h1>
+          {renderQuoteCards()}
         </div>
       </div>
 
-      {/* Separate Detailed Notes Section */}
-      <div className="mx-auto max-w-screen-xl px-4 md:px-10 lg:px-20 mt-10 relative">
-        <h1 className="text-darkgrey font-karla font-bold text-2xl md:text-3xl pb-4">
+      {/* Import the DetailedNotes component */}
+      <div className="w-full px-4 md:px-20 lg:px-80 mt-10 relative mx-auto pb-16">
+        <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
           Detailed Notes
         </h1>
-        {renderNotes()} {/* Render Notes */}
+        <DetailedNotes notes={book.notes} />
       </div>
     </>
   );
