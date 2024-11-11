@@ -6,9 +6,9 @@ import StarSystem from "./StarSystem";
 import QuoteCard from "./QuoteCard";
 import DetailedNotes from "./DetailedNotes";
 
-const BookDetails = ({ books }) => {
+const BookDetails = ({ bookNotes }) => {
   const { id } = useParams();
-  const book = books.find((book) => book.id === id);
+  const book = bookNotes.find((book) => book.id === id);
 
   if (!book) {
     return <div>Book not found</div>;
@@ -96,8 +96,7 @@ const BookDetails = ({ books }) => {
         <h1 className="text-darkgrey font-karla font-bold text-3xl md:text-4xl py-4 lg:ml-0 my-4">
           {book.title} - Summary with Notes and Highlights
         </h1>
-        <p className="font-karla text-xl md:text-2xl my-4">{book.summary}</p>{" "}
-        {/* Updated to larger text */}
+        <p className="font-karla text-xl md:text-2xl my-4">{book.summary}</p>
         <div className="flex justify-center py-4">
           <div className="w-1/4 bg-black h-1"></div>
         </div>
@@ -123,7 +122,6 @@ const BookDetails = ({ books }) => {
         </div>
       </div>
 
-      {/* Import the DetailedNotes component */}
       <div className="w-full px-4 md:px-20 lg:px-80 mt-10 relative mx-auto pb-16">
         <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
           Detailed Notes
