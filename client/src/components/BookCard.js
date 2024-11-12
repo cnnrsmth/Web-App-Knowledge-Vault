@@ -22,12 +22,20 @@ const BookCard = ({ book }) => {
         </div>
       </div>
       <div className="flex-grow text-center">
+        {/* Book title */}
         <div className="text-3xl text-white font-karla font-extrabold mb-4 uppercase">
           {book.title}
         </div>
-        <p className="mt-2 text-gray-400 font-roboto text-xl">{book.summary}</p>{" "}
-        {/* Increased font size */}
+
+        {/* Author's name below title, same font and color as title */}
+        <div className="text-2xl text-white font-karla font-extrabold mb-4">
+          {book.author} {/* Display author's name here */}
+        </div>
+
+        {/* Book summary */}
+        <p className="mt-2 text-gray-400 font-roboto text-xl">{book.summary}</p>
       </div>
+
       <div className="flex items-center justify-end space-x-4 mt-4">
         <div className="flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 bg-black group-hover:bg-white">
           <FontAwesomeIcon
