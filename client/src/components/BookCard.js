@@ -2,6 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import StarSystemLight from "./StarSystemLight"; // Import the StarSystemLight component
 
 const BookCard = ({ book }) => {
   return (
@@ -26,14 +27,18 @@ const BookCard = ({ book }) => {
         <div className="text-3xl text-white font-karla font-extrabold mb-4 uppercase">
           {book.title}
         </div>
-
         {/* Author's name below title, same font and color as title */}
         <div className="text-2xl text-white font-karla font-extrabold mb-4">
           {book.author} {/* Display author's name here */}
         </div>
-
+        {/* Book rating (StarSystemLight below the author's name) */}
+        <StarSystemLight book={book} />{" "}
+        {/* Render StarSystemLight below author's name */}
         {/* Book summary */}
-        <p className="mt-2 text-gray-400 font-roboto text-xl">{book.summary}</p>
+        <p className="mt-4 text-gray-400 font-roboto text-xl">
+          {book.summary}
+        </p>{" "}
+        {/* Increased spacing to the summary */}
       </div>
 
       <div className="flex items-center justify-end space-x-4 mt-4">

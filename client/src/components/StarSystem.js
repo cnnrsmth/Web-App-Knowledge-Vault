@@ -1,28 +1,32 @@
 import React from "react";
-import goldStar from "../assets/gold.png";
-import fadedGoldStar from "../assets/fadedgold.png";
 
 function StarSystem({ book }) {
   const rating = book.rating;
-  const fullStars = Math.floor(rating);
-  const fadedStars = 5 - Math.ceil(rating);
+  const filledCircles = Math.floor(rating); // Number of filled circles based on the rating
+  const totalCircles = 5; // Total number of circles
+
   return (
-    <div className="flex items-center justify-center mt-4">
-      {[...Array(fullStars)].map((_, index) => (
-        <img
+    <div className="flex items-center justify-center mt-4 space-x-2">
+      {[...Array(totalCircles)].map((_, index) => (
+        <div
           key={index}
-          src={goldStar}
-          alt="Gold Star"
-          className="w-6 h-6 mx-1"
-        />
-      ))}
-      {[...Array(fadedStars)].map((_, index) => (
-        <img
-          key={index}
-          src={fadedGoldStar}
-          alt="Faded Gold Star"
-          className="w-6 h-6 mx-1"
-        />
+          className={`w-10 h-10 rounded-full border-4 border-gray-800`} // Same outline color for all circles
+          style={{
+            backgroundColor: "transparent", // Outer circle is transparent for both filled and unfilled
+            position: "relative",
+          }}
+        >
+          {/* Inner circle (blob) for filled circles */}
+          {index < filledCircles && (
+            <div
+              className="absolute top-1 left-1 right-1 bottom-1 rounded-full"
+              style={{
+                backgroundColor: "#2A2A2A", // The dark blob color for filled circles
+                margin: "1px", // Reduced gap between the blob and the circle outline
+              }}
+            ></div>
+          )}
+        </div>
       ))}
     </div>
   );

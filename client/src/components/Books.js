@@ -48,7 +48,7 @@ const Books = ({ bookNotes }) => {
 
   return (
     <div
-      className="pt-40 px-40 py-60 min-h-screen"
+      className="pt-40 lg:px-40 py-60 min-h-screen"
       style={{ backgroundColor: "#0A0A0A" }}
     >
       {/* Search with Filter Icon */}
