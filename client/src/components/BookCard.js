@@ -2,13 +2,14 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import StarSystemLight from "./StarSystemLight"; // Import the StarSystemLight component
+import StarSystemLight from "./StarSystemLight";
+import OverlayIcon from "./OverlayIcon"; // Import the OverlayIcon component
 
 const BookCard = ({ book }) => {
   return (
     <Link
       to={`/books/${book.id}`}
-      className="shadow-lg rounded-lg p-6 flex flex-col hover:cursor-pointer group"
+      className="shadow-lg rounded-lg p-6 flex flex-col hover:cursor-pointer group relative"
       style={{ backgroundColor: "#2A2A2A" }}
     >
       <div className="relative mb-4 w-full">
@@ -17,28 +18,22 @@ const BookCard = ({ book }) => {
           alt={book.title}
           className="rounded-lg w-full object-cover h-[30vh]"
         />
-        {/* Overlay for type */}
-        <div className="absolute top-2 right-2 rounded-lg px-2 py-1 text-gray-600 transition-colors duration-200 bg-gray-200 group-hover:bg-gray-300 text-xs font-bold">
-          {book.type}
-        </div>
+
+        {/* OverlayIcon for content type on hover */}
+        <OverlayIcon type={book.type} />
       </div>
+
       <div className="flex-grow text-center">
-        {/* Book title */}
         <div className="text-3xl text-white font-karla font-extrabold mb-4 uppercase">
           {book.title}
         </div>
-        {/* Author's name below title, same font and color as title */}
         <div className="text-2xl text-white font-karla font-extrabold mb-4">
-          {book.author} {/* Display author's name here */}
+          {book.author}
         </div>
-        {/* Book rating (StarSystemLight below the author's name) */}
-        <StarSystemLight book={book} />{" "}
-        {/* Render StarSystemLight below author's name */}
-        {/* Book summary */}
-        <p className="mt-4 text-gray-400 font-roboto text-xl">
-          {book.summary}
-        </p>{" "}
-        {/* Increased spacing to the summary */}
+
+        <StarSystemLight book={book} />
+
+        <p className="mt-4 text-gray-400 font-roboto text-xl">{book.summary}</p>
       </div>
 
       <div className="flex items-center justify-end space-x-4 mt-4">

@@ -22,9 +22,10 @@ const DetailedNotes = ({ notes }) => {
             {/* Added margin bottom to separate the key from the horizontal rule */}
             <span>{key}</span>
             <button
-              className={`w-8 h-8 text-white rounded-full font-bold flex justify-center items-center transition-colors ${
+              className={`w-8 h-8 text-white rounded-full font-bold flex justify-center items-center transition-colors leading-none ${
                 openSections[key] ? "bg-gray-800" : "bg-black"
               }`}
+              style={{ lineHeight: "3" }}
             >
               {openSections[key] ? "-" : "+"}
             </button>
