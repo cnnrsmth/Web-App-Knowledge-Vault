@@ -11,7 +11,11 @@ const BookDetails = ({ bookNotes }) => {
   const book = bookNotes.find((book) => book.id === id);
 
   if (!book) {
-    return <div>Book not found</div>;
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-2xl font-karla text-gray-600">Book not found</div>
+      </div>
+    );
   }
 
   const renderTakeawayCards = () => {
@@ -34,19 +38,14 @@ const BookDetails = ({ bookNotes }) => {
     return rows.map((row, rowIndex) => (
       <div
         key={rowIndex}
-        className={`grid gap-4 ${
+        className={`grid gap-8 ${
           row.length === 2
-            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+            ? "grid-cols-1 md:grid-cols-2"
             : "grid-cols-1 md:grid-cols-3"
         }`}
       >
         {row.map((takeaway, index) => (
-          <TakeawayCard
-            key={index}
-            number={index + 1}
-            takeaway={takeaway}
-            className="border border-white rounded-lg p-4 transition-colors duration-200 hover:bg-gray-200"
-          />
+          <TakeawayCard key={index} number={index + 1} takeaway={takeaway} />
         ))}
       </div>
     ));
@@ -72,9 +71,9 @@ const BookDetails = ({ bookNotes }) => {
     return rows.map((row, rowIndex) => (
       <div
         key={rowIndex}
-        className={`grid gap-4 ${
+        className={`grid gap-8 ${
           row.length === 2
-            ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-2"
+            ? "grid-cols-1 md:grid-cols-2"
             : "grid-cols-1 md:grid-cols-3"
         }`}
       >
@@ -86,49 +85,109 @@ const BookDetails = ({ bookNotes }) => {
   };
 
   return (
-    <>
-      <div className="pt-40 py-16 mx-auto text-center md:w-1/3 w-2/3">
-        <img
-          src={book.image}
-          alt={book.title}
-          className="rounded-lg object-cover h-[30vh] mx-auto my-4"
-        />
-        <h1 className="text-darkgrey font-karla font-bold text-3xl md:text-4xl py-4 lg:ml-0 my-4">
-          {book.title} - Summary with Notes and Highlights
-        </h1>
-        <p className="font-karla text-xl md:text-2xl my-4">{book.summary}</p>
-        <div className="flex justify-center py-4">
-          <div className="w-1/4 bg-black h-1"></div>
+    <div className="min-h-screen bg-[#0A0A0A]">
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-b from-black to-[#0A0A0A] text-white">
+        <div className="absolute top-5 left-[calc(16%)] pt-4 pl-4 z-10">
+          <BackButton />
         </div>
-        <StarSystem key={book.id} book={book} />
-      </div>
-      <div className="absolute top-5 left-[calc(16%)] pt-4 pl-4 z-10">
-        <BackButton />
+
+        <div className="container mx-auto px-4 pt-40 pb-20">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Book Image */}
+            <div className="relative">
+              <img
+                src={book.image}
+                alt={book.title}
+                className="rounded-lg object-cover h-[40vh] mx-auto shadow-2xl"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg"></div>
+            </div>
+
+            {/* Book Info */}
+            <div className="mt-8 space-y-6">
+              <h1 className="text-4xl md:text-5xl font-karla font-bold">
+                {book.title}
+              </h1>
+              <div className="flex justify-center">
+                <StarSystem key={book.id} book={book} />
+              </div>
+              <p className="text-xl md:text-2xl font-karla text-gray-300 max-w-2xl mx-auto">
+                {book.summary}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <div
-        className="text-white py-16 w-full px-4 md:px-20 lg:px-60"
-        style={{ backgroundColor: "#0A0A0A" }}
-      >
-        <div className="px-4 md:px-10 lg:px-20">
-          <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
-            Key Takeaways
-          </h1>
-          {renderTakeawayCards()}
-          <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
-            Key Quotes
-          </h1>
-          {renderQuoteCards()}
-        </div>
-      </div>
+      {/* Content Sections with subtle separators */}
+      <div className="relative">
+        {/* Key Takeaways Section */}
+        <section
+          id="takeaways"
+          className="relative bg-gradient-to-b from-[#0A0A0A] to-[#141414] py-20"
+        >
+          <div className="container mx-auto px-4">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
+              Key Takeaways
+            </h2>
+            <div className="grid gap-8 max-w-6xl mx-auto">
+              {renderTakeawayCards()}
+            </div>
+          </div>
+        </section>
 
-      <div className="w-full px-4 md:px-20 lg:px-80 mt-10 relative mx-auto pb-16">
-        <h1 className="font-karla font-bold text-3xl md:text-4xl pb-8 mt-10">
-          Detailed Notes
-        </h1>
-        <DetailedNotes notes={book.notes} />
+        {/* Key Quotes Section */}
+        <section
+          id="quotes"
+          className="relative bg-gradient-to-b from-[#141414] to-[#0A0A0A] py-20"
+        >
+          <div className="container mx-auto px-4">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
+              Key Quotes
+            </h2>
+            <div className="grid gap-8 max-w-6xl mx-auto">
+              {renderQuoteCards()}
+            </div>
+          </div>
+        </section>
+
+        {/* Detailed Notes Section */}
+        <section
+          id="notes"
+          className="relative bg-gradient-to-b from-[#0A0A0A] to-[#141414] py-20"
+        >
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
+              Detailed Notes
+            </h2>
+            <DetailedNotes notes={book.notes} />
+          </div>
+        </section>
+
+        <nav className="fixed right-8 top-1/2 transform -translate-y-1/2 hidden lg:block z-10">
+          <div className="space-y-4">
+            {["takeaways", "quotes", "notes"].map((section) => (
+              <a
+                key={section}
+                href={`#${section}`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document
+                    .getElementById(section)
+                    ?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="w-2 h-2 block rounded-full bg-gray-600 hover:bg-white transition-colors duration-200"
+                title={section.charAt(0).toUpperCase() + section.slice(1)}
+              />
+            ))}
+          </div>
+        </nav>
       </div>
-    </>
+    </div>
   );
 };
 

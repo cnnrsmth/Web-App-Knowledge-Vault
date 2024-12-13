@@ -6,6 +6,8 @@ import Sort from "./Sort"; // Import Sort component
 import { FiFilter } from "react-icons/fi";
 
 const Books = ({ bookNotes }) => {
+  console.log(bookNotes[0]); // Add this at the start of your Books component
+
   const [filter, setFilter] = useState(["All"]);
   const [searchTerm, setSearchTerm] = useState("");
   const [isFilterVisible, setIsFilterVisible] = useState(false);
