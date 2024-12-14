@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Books from "./components/Books";
 import BookDetails from "./components/BookDetails";
 import axios from "axios"; // Import axios for API calls
+import ChatBubble from "./components/ChatBubble";
 
 function App() {
   const [bookNotes, setBookNotes] = useState([]); // State to hold fetched book notes
@@ -29,6 +30,7 @@ function App() {
             element={<BookDetails bookNotes={bookNotes} />}
           />
         </Routes>
+        <ChatBubble />
       </div>
     </Router>
   );

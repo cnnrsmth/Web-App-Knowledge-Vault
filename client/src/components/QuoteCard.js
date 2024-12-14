@@ -1,44 +1,47 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faQuoteLeft, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const QuoteCard = ({ quote }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [needsExpansion, setNeedsExpansion] = useState(false);
   const contentRef = useRef(null);
-  const [isOverflowing, setIsOverflowing] = useState(false);
 
   useEffect(() => {
     if (contentRef.current) {
-      setIsOverflowing(
-        contentRef.current.scrollHeight > contentRef.current.clientHeight
-      );
+      setNeedsExpansion(contentRef.current.scrollHeight > 150);
     }
   }, [quote]);
 
   return (
     <div
-      className={`rounded-3xl shadow-lg p-6 mb-4 flex flex-col justify-between relative ${
-        isExpanded ? "z-10" : ""
-      }`}
-      style={{
-        backgroundColor: "#2A2A2A",
-        gridRow: isExpanded ? "span 2" : "span 1",
-        transition: "all 0.3s ease",
-      }}
+      className="bg-[#2A2A2A] rounded-xl p-6 transition-all duration-300 hover:shadow-xl"
+      style={{ height: "min-content" }}
     >
+      <FontAwesomeIcon
+        icon={faQuoteLeft}
+        className="text-2xl text-gray-500 mb-4"
+      />
       <div
         ref={contentRef}
-        className={`text-white text-lg md:text-xl lg:text-2xl font-karla font-bold italic break-words ${
-          isExpanded ? "" : "line-clamp-5"
+        className={`text-gray-300 whitespace-pre-wrap transition-all duration-300 ${
+          !needsExpansion ? "" : isExpanded ? "" : "line-clamp-6"
         }`}
       >
-        "{quote}"
+        {quote}
       </div>
-
-      {isOverflowing && (
+      {needsExpansion && (
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="text-gray-400 hover:text-white text-sm mt-2 transition-colors duration-200"
+          className="mt-4 text-gray-400 hover:text-white transition-colors flex items-center gap-2"
         >
-          {isExpanded ? "Show Less" : "..."}
+          <span>{isExpanded ? "Show less" : "Show more"}</span>
+          <FontAwesomeIcon
+            icon={faChevronDown}
+            className={`transition-transform duration-300 ${
+              isExpanded ? "rotate-180" : ""
+            }`}
+          />
         </button>
       )}
     </div>
