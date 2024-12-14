@@ -1,42 +1,36 @@
-import React, { useState } from "react";
-import { FiSearch } from "react-icons/fi"; // Using react-icons for the search icon
+import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
-function Search({ searchTerm, setSearchTerm }) {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  // Toggle the search bar expansion
-  const handleIconClick = () => {
-    setIsExpanded(!isExpanded);
-  };
-
-  // Handle input changes and call the onSearch function
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setSearchTerm(value); // Update search term
-  };
-
+const Search = ({ searchTerm, setSearchTerm }) => {
   return (
-    <div className="flex items-center space-x-2">
-      {/* Search Icon with click handler */}
-      <button
-        onClick={handleIconClick}
-        className="w-12 h-12 rounded-full bg-black text-white border-2 border-white flex justify-center items-center transition duration-300 hover:bg-white hover:border-black hover:text-black focus:outline-none"
-      >
-        <FiSearch className="w-6 h-6" style={{ strokeWidth: 2 }} />
-      </button>
-
-      {/* Expanding search input */}
-      {isExpanded && (
+    <div className="relative mb-8 max-w-xl mx-auto">
+      <div className="relative">
         <input
           type="text"
           value={searchTerm}
-          onChange={handleInputChange}
-          placeholder="Search by title or author"
-          className="bg-white text-black border border-gray-500 rounded-full px-4 py-2 text-lg transition-all duration-300 ease-in-out transform w-64 focus:outline-none"
+          onChange={(e) => setSearchTerm(e.target.value)}
+          placeholder="Search by title or author..."
+          className="
+            w-full px-6 py-4 pl-12
+            bg-[#2A2A2A] 
+            text-white placeholder-gray-400
+            rounded-xl
+            outline-none
+            transition-all duration-300
+            border-2 border-transparent
+            focus:border-white/20
+            hover:border-white/10
+            font-karla
+          "
         />
-      )}
+        <FontAwesomeIcon
+          icon={faSearch}
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+        />
+      </div>
     </div>
   );
-}
+};
 
 export default Search;

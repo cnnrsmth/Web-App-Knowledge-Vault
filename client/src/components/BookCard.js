@@ -1,50 +1,61 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StarSystemLight from "./StarSystemLight";
-import OverlayIcon from "./OverlayIcon"; // Import the OverlayIcon component
+import OverlayIcon from "./OverlayIcon";
 
 const BookCard = ({ book }) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/books/${book.id}`);
+  };
+
   return (
-    <Link
-      to={`/books/${book.id}`}
-      className="shadow-lg rounded-lg p-6 flex flex-col hover:cursor-pointer group relative"
+    <div
+      onClick={handleClick}
+      className="shadow-lg rounded-xl p-6 flex flex-col hover:cursor-pointer group relative transition-all duration-300 hover:shadow-2xl hover:-translate-y-1"
       style={{ backgroundColor: "#2A2A2A" }}
     >
-      <div className="relative mb-4 w-full">
-        <img
-          src={book.image}
-          alt={book.title}
-          className="rounded-lg w-full object-cover h-[30vh]"
-        />
+      <div className="relative mb-6 w-full overflow-hidden rounded-lg">
+        <div className="relative">
+          <img
+            src={book.image}
+            alt={book.title}
+            className="w-full object-cover h-[30vh] transform transition-transform duration-300 group-hover:scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+        </div>
 
         {/* OverlayIcon for content type on hover */}
         <OverlayIcon type={book.type} />
       </div>
 
-      <div className="flex-grow text-center">
-        <div className="text-3xl text-white font-karla font-extrabold mb-4 uppercase">
+      <div className="flex-grow text-center space-y-4">
+        <div className="text-2xl text-white font-karla font-bold uppercase tracking-wide">
           {book.title}
         </div>
-        <div className="text-2xl text-white font-karla font-extrabold mb-4">
-          {book.author}
+        <div className="text-xl text-gray-300 font-karla">{book.author}</div>
+
+        <div className="flex justify-center">
+          <StarSystemLight book={book} />
         </div>
 
-        <StarSystemLight book={book} />
-
-        <p className="mt-4 text-gray-400 font-roboto text-xl">{book.summary}</p>
+        <p className="mt-4 text-gray-400 font-roboto text-lg line-clamp-3 leading-relaxed">
+          {book.summary}
+        </p>
       </div>
 
-      <div className="flex items-center justify-end space-x-4 mt-4">
-        <div className="flex items-center justify-center w-10 h-10 rounded-full transition-colors duration-200 bg-black group-hover:bg-white">
+      <div className="flex items-center justify-end mt-6">
+        <div className="flex items-center justify-center w-10 h-10 rounded-full transition-all duration-300 bg-black group-hover:bg-white transform group-hover:scale-110">
           <FontAwesomeIcon
             icon={faArrowRight}
-            className="text-white transition-colors duration-200 group-hover:text-black"
+            className="text-white transition-colors duration-300 group-hover:text-black"
           />
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

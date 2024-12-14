@@ -2,92 +2,139 @@ import React, { useState } from "react";
 import BookCard from "./BookCard";
 import Filter from "./Filter";
 import Search from "./Search";
-import Sort from "./Sort"; // Import Sort component
-import { FiFilter } from "react-icons/fi";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faFilter, faSort } from "@fortawesome/free-solid-svg-icons";
 
 const Books = ({ bookNotes }) => {
-  console.log(bookNotes[0]); // Add this at the start of your Books component
-
-  const [filter, setFilter] = useState(["All"]);
+  const [filter, setFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isSearchVisible, setIsSearchVisible] = useState(false);
   const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [sortOrder, setSortOrder] = useState("neutral");
+  const [sortAscending, setSortAscending] = useState(true);
 
-  const categories = [
-    "All",
-    ...new Set(bookNotes.map((item) => item.category)),
-  ];
+  // Get unique categories from book notes
+  const categories = [...new Set(bookNotes.map((book) => book.category))];
 
   const toggleFilter = (category) => {
-    setFilter((prevFilter) => {
-      if (category === "All") {
-        return prevFilter.includes("All") ? [] : ["All"];
-      } else {
-        if (prevFilter.includes("All")) {
-          return [category];
-        }
-        const updatedFilter = prevFilter.includes(category)
-          ? prevFilter.filter((c) => c !== category)
-          : [...prevFilter, category];
-        return updatedFilter.length === categories.length - 1
-          ? ["All"]
-          : updatedFilter;
-      }
+    if (category === "All") {
+      // Always set to empty array (which means "All" is selected)
+      setFilter([]);
+      return;
+    }
+
+    // If all categories are about to be selected, switch to "All" (empty array)
+    const newFilter = filter.includes(category)
+      ? filter.filter((c) => c !== category)
+      : [...filter, category];
+
+    if (newFilter.length === categories.length) {
+      setFilter([]);
+    } else {
+      setFilter(newFilter);
+    }
+  };
+
+  const filteredBooks = bookNotes
+    .filter((book) => {
+      // Search in both title and author
+      const matchesSearch =
+        !searchTerm ||
+        book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        book.author.toLowerCase().includes(searchTerm.toLowerCase());
+
+      // Filter by category
+      const matchesFilter =
+        filter.length === 0 || filter.includes(book.category);
+
+      // Both conditions must be true
+      return matchesSearch && matchesFilter;
+    })
+    .sort((a, b) => {
+      return sortAscending ? a.rating - b.rating : b.rating - a.rating;
     });
-  };
-
-  const handleFilterToggle = () => {
-    setIsFilterVisible(!isFilterVisible);
-  };
-
-  const handleSortChange = (order) => {
-    setSortOrder(order);
-  };
-
-  const sortedBooks = [...bookNotes].sort((a, b) => {
-    if (sortOrder === "ascending") return b.rating - a.rating;
-    if (sortOrder === "descending") return a.rating - b.rating;
-    return 0; // Neutral: no sorting
-  });
-
-  const filteredBooks = filter.includes("All")
-    ? sortedBooks
-    : sortedBooks.filter((book) => filter.includes(book.category));
 
   return (
-    <div
-      className="pt-40 lg:px-40 py-60 min-h-screen"
-      style={{ backgroundColor: "#0A0A0A" }}
-    >
-      <div className="flex justify-center items-center mb-6">
-        <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <button
-          onClick={handleFilterToggle}
-          className="ml-4 w-12 h-12 rounded-full bg-black text-white border-2 border-white flex justify-center items-center transition duration-300 hover:bg-white hover:border-black hover:text-black focus:outline-none"
+    <div className="min-h-screen bg-black py-12 px-4">
+      {/* Header Controls */}
+      <div className="max-w-7xl mx-auto mb-12">
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-4xl font-karla font-bold text-white">
+            Knowledge Vault
+          </h1>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => {
+                setIsSearchVisible(!isSearchVisible);
+                setIsFilterVisible(false);
+              }}
+              className={`p-3 rounded-full transition-all duration-300 ${
+                searchTerm || isSearchVisible
+                  ? "bg-white text-black"
+                  : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
+              }`}
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            <button
+              onClick={() => {
+                setIsFilterVisible(!isFilterVisible);
+                setIsSearchVisible(false);
+              }}
+              className={`p-3 rounded-full transition-all duration-300 ${
+                isFilterVisible
+                  ? "bg-white text-black"
+                  : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
+              }`}
+            >
+              <FontAwesomeIcon icon={faFilter} />
+            </button>
+            <button
+              onClick={() => setSortAscending(!sortAscending)}
+              className="p-3 rounded-full bg-[#2A2A2A] text-white hover:bg-[#3A3A3A] transition-all duration-300"
+              title={
+                sortAscending
+                  ? "Sort by rating (high to low)"
+                  : "Sort by rating (low to high)"
+              }
+            >
+              <FontAwesomeIcon
+                icon={faSort}
+                className={`transform transition-all duration-300 ${
+                  !sortAscending ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </div>
+        </div>
+
+        {/* Expandable Search */}
+        <div
+          className={`transition-all duration-300 overflow-hidden ${
+            isSearchVisible ? "max-h-20 opacity-100 mb-8" : "max-h-0 opacity-0"
+          }`}
         >
-          <FiFilter className="w-6 h-6" style={{ strokeWidth: 2 }} />
-        </button>
-        <Sort onSortChange={handleSortChange} /> {/* Add Sort Component */}
+          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        </div>
+
+        {/* Expandable Filter */}
+        <div
+          className={`transition-all duration-300 overflow-hidden ${
+            isFilterVisible ? "max-h-20 opacity-100 mb-8" : "max-h-0 opacity-0"
+          }`}
+        >
+          <Filter
+            toggleFilter={toggleFilter}
+            filter={filter}
+            categories={categories}
+          />
+        </div>
       </div>
 
-      {isFilterVisible && (
-        <Filter
-          toggleFilter={toggleFilter}
-          filter={filter}
-          categories={categories}
-        />
-      )}
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mx-20 mt-20">
-        {filteredBooks
-          .filter(
-            (book) =>
-              book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              book.author.toLowerCase().includes(searchTerm.toLowerCase())
-          )
-          .map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
+      {/* Books Grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredBooks.map((book) => (
+          <BookCard key={book.id} book={book} />
+        ))}
       </div>
     </div>
   );

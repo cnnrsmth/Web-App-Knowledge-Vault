@@ -1,23 +1,43 @@
 import React from "react";
 
-function Filter({ categories, toggleFilter, filter }) {
+const Filter = ({ toggleFilter, filter, categories }) => {
+  const isAllSelected = filter.length === 0;
+
   return (
-    <div className="flex flex-wrap justify-center items-center space-x-2">
+    <div className="mb-8 flex flex-wrap justify-center gap-3 pt-1 pb-2">
+      <button
+        onClick={() => toggleFilter("All")}
+        className={`
+          px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+          ${
+            isAllSelected
+              ? "bg-white text-black hover:bg-gray-200"
+              : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
+          }
+          transform hover:-translate-y-0.5 hover:shadow-lg
+        `}
+      >
+        All
+      </button>
       {categories.map((category) => (
         <button
           key={category}
-          className={`font-karla text-lg font-medium border rounded-full transition-colors duration-200 px-6 py-3 ${
-            filter.includes(category)
-              ? "bg-white text-black font-bold border-black" // Selected state
-              : "border-gray-500 text-gray-200 hover:bg-gray-600 hover:text-white" // Non-selected state with improved contrast
-          }`}
           onClick={() => toggleFilter(category)}
+          className={`
+            px-4 py-2 rounded-full text-sm font-medium transition-all duration-300
+            ${
+              filter.includes(category) && !isAllSelected
+                ? "bg-white text-black hover:bg-gray-200"
+                : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
+            }
+            transform hover:-translate-y-0.5 hover:shadow-lg
+          `}
         >
           {category}
         </button>
       ))}
     </div>
   );
-}
+};
 
 export default Filter;
