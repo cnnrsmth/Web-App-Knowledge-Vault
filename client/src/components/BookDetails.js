@@ -86,8 +86,11 @@ const BookDetails = ({ bookNotes }) => {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
-      {/* Hero Section */}
-      <div className="relative bg-gradient-to-b from-black to-[#0A0A0A] text-white">
+      {/* Hero Section - Added ID */}
+      <div
+        id="hero"
+        className="relative bg-gradient-to-b from-black to-[#0A0A0A] text-white"
+      >
         <div className="absolute top-5 left-[calc(16%)] pt-4 pl-4 z-10">
           <BackButton />
         </div>
@@ -128,10 +131,20 @@ const BookDetails = ({ bookNotes }) => {
           className="relative bg-gradient-to-b from-[#0A0A0A] to-[#141414] py-20"
         >
           <div className="container mx-auto px-4">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
-            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
-              Key Takeaways
-            </h2>
+            {/* Enhanced separator */}
+            <div className="absolute inset-x-0 top-0">
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+              <div className="h-[3px] bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+            </div>
+
+            {/* Minimalist Section Header */}
+            <div className="flex items-center justify-center mb-16">
+              <h2 className="text-2xl md:text-3xl font-karla font-medium text-white/90">
+                Key Takeaways
+              </h2>
+            </div>
+
             <div className="grid gap-8 max-w-6xl mx-auto">
               {renderTakeawayCards()}
             </div>
@@ -144,10 +157,20 @@ const BookDetails = ({ bookNotes }) => {
           className="relative bg-gradient-to-b from-[#141414] to-[#0A0A0A] py-20"
         >
           <div className="container mx-auto px-4">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
-            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
-              Key Quotes
-            </h2>
+            {/* Enhanced separator */}
+            <div className="absolute inset-x-0 top-0">
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+              <div className="h-[3px] bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+            </div>
+
+            {/* Minimalist Section Header */}
+            <div className="flex items-center justify-center mb-16">
+              <h2 className="text-2xl md:text-3xl font-karla font-medium text-white/90">
+                Key Quotes
+              </h2>
+            </div>
+
             <div className="grid gap-8 max-w-6xl mx-auto">
               {renderQuoteCards()}
             </div>
@@ -160,17 +183,28 @@ const BookDetails = ({ bookNotes }) => {
           className="relative bg-gradient-to-b from-[#0A0A0A] to-[#141414] py-20"
         >
           <div className="container mx-auto px-4 max-w-4xl">
-            <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
-            <h2 className="text-3xl md:text-4xl font-karla font-bold mb-10 text-center text-white">
-              Detailed Notes
-            </h2>
+            {/* Enhanced separator */}
+            <div className="absolute inset-x-0 top-0">
+              <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
+              <div className="h-[2px] bg-gradient-to-r from-transparent via-gray-700 to-transparent"></div>
+              <div className="h-[3px] bg-gradient-to-r from-transparent via-gray-600 to-transparent"></div>
+            </div>
+
+            {/* Minimalist Section Header */}
+            <div className="flex items-center justify-center mb-16">
+              <h2 className="text-2xl md:text-3xl font-karla font-medium text-white/90">
+                Detailed Notes
+              </h2>
+            </div>
+
             <DetailedNotes notes={book.notes} />
           </div>
         </section>
 
+        {/* Updated Navigation with hero section */}
         <nav className="fixed right-8 top-1/2 transform -translate-y-1/2 hidden lg:block z-10">
           <div className="space-y-4">
-            {["takeaways", "quotes", "notes"].map((section) => (
+            {["hero", "takeaways", "quotes", "notes"].map((section) => (
               <a
                 key={section}
                 href={`#${section}`}
@@ -181,7 +215,11 @@ const BookDetails = ({ bookNotes }) => {
                     ?.scrollIntoView({ behavior: "smooth" });
                 }}
                 className="w-2 h-2 block rounded-full bg-gray-600 hover:bg-white transition-colors duration-200"
-                title={section.charAt(0).toUpperCase() + section.slice(1)}
+                title={
+                  section === "hero"
+                    ? "Top"
+                    : section.charAt(0).toUpperCase() + section.slice(1)
+                }
               />
             ))}
           </div>

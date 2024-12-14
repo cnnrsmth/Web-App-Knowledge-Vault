@@ -38,7 +38,7 @@ const QuoteCard = ({ quote }) => {
           onClick={() => setIsExpanded(!isExpanded)}
           className="text-gray-400 hover:text-white text-sm mt-2 transition-colors duration-200"
         >
-          {isExpanded ? "Show Less" : "Read More"}
+          {isExpanded ? "Show Less" : "..."}
         </button>
       )}
     </div>

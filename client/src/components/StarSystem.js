@@ -1,35 +1,28 @@
 import React from "react";
 
-function StarSystem({ book }) {
+const StarSystem = ({ book }) => {
   const rating = book.rating;
-  const filledCircles = Math.floor(rating); // Number of filled circles based on the rating
-  const totalCircles = 5; // Total number of circles
+  const maxRating = 5;
 
   return (
-    <div className="flex items-center justify-center mt-4 space-x-2">
-      {[...Array(totalCircles)].map((_, index) => (
-        <div
+    <div className="flex items-center space-x-1">
+      {[...Array(maxRating)].map((_, index) => (
+        <svg
           key={index}
-          className={`w-10 h-10 rounded-full border-4 border-gray-800`} // Same outline color for all circles
-          style={{
-            backgroundColor: "transparent", // Outer circle is transparent for both filled and unfilled
-            position: "relative",
-          }}
+          className={`w-6 h-6 ${
+            index < rating
+              ? "text-yellow-400" // Brighter yellow for filled stars
+              : "text-gray-600" // Darker gray for empty stars
+          }`}
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          {/* Inner circle (blob) for filled circles */}
-          {index < filledCircles && (
-            <div
-              className="absolute top-1 left-1 right-1 bottom-1 rounded-full"
-              style={{
-                backgroundColor: "#2A2A2A", // The dark blob color for filled circles
-                margin: "1px", // Reduced gap between the blob and the circle outline
-              }}
-            ></div>
-          )}
-        </div>
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
       ))}
     </div>
   );
-}
+};
 
 export default StarSystem;
