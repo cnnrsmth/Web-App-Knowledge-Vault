@@ -1,64 +1,50 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 const DetailedNotes = ({ notes }) => {
-  const [openSections, setOpenSections] = useState({});
-  const [activeSection, setActiveSection] = useState(null);
+  const [expandedNotes, setExpandedNotes] = useState(new Set());
 
-  const toggleSection = (key) => {
-    setOpenSections((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-    setActiveSection(openSections[key] ? null : key);
+  const toggleNote = (section) => {
+    const newExpanded = new Set(expandedNotes);
+    if (newExpanded.has(section)) {
+      newExpanded.delete(section);
+    } else {
+      newExpanded.add(section);
+    }
+    setExpandedNotes(newExpanded);
   };
 
   return (
-    <div className="space-y-4">
-      {Object.entries(notes).map(([key, value]) => (
-        <motion.div
-          key={key}
-          initial={false}
-          className={`rounded-xl overflow-hidden ${
-            openSections[key] ? "bg-[#3A3A3A]" : "bg-[#2A2A2A]"
-          }`}
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 auto-rows-auto">
+      {Object.entries(notes || {}).map(([section, content]) => (
+        <div
+          key={section}
+          className="bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl h-fit"
         >
           <button
-            onClick={() => toggleSection(key)}
-            className="w-full px-6 py-4 flex items-center justify-between group transition-all duration-300"
+            onClick={() => toggleNote(section)}
+            className="w-full px-6 py-4 flex items-center justify-between text-left"
           >
-            <span className="text-xl font-karla font-bold text-white group-hover:text-gray-300">
-              {key}
-            </span>
-            <motion.span
-              animate={{ rotate: openSections[key] ? 180 : 0 }}
-              transition={{ duration: 0.3 }}
-              className="text-gray-400 group-hover:text-white"
-            >
-              ↓
-            </motion.span>
+            <h3 className="text-white text-xl font-bold">{section}</h3>
+            <FontAwesomeIcon
+              icon={faChevronDown}
+              className={`text-gray-400 transition-transform duration-300 ${
+                expandedNotes.has(section) ? "rotate-180" : ""
+              }`}
+            />
           </button>
 
-          <AnimatePresence>
-            {openSections[key] && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className="px-6 pb-6"
-              >
-                <div className="prose prose-lg prose-invert max-w-none">
-                  {value.split("\n").map((paragraph, idx) => (
-                    <p key={idx} className="text-gray-300 leading-relaxed mb-4">
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </motion.div>
+          <div
+            className={`px-6 transition-all duration-300 ${
+              expandedNotes.has(section)
+                ? "max-h-[1000px] pb-6 opacity-100"
+                : "max-h-0 opacity-0"
+            } overflow-hidden`}
+          >
+            <p className="text-gray-300 whitespace-pre-wrap">{content}</p>
+          </div>
+        </div>
       ))}
     </div>
   );

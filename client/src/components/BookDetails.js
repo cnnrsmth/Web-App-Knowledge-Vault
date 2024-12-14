@@ -1,13 +1,15 @@
 import React from "react";
-import { useParams } from "react-router-dom";
-import BackButton from "./BackButton";
+import { useParams, useNavigate } from "react-router-dom";
 import TakeawayCard from "./TakeawayCard";
 import StarSystem from "./StarSystem";
 import QuoteCard from "./QuoteCard";
 import DetailedNotes from "./DetailedNotes";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 const BookDetails = ({ bookNotes }) => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const book = bookNotes.find((book) => book.id === id);
 
   if (!book) {
@@ -86,38 +88,56 @@ const BookDetails = ({ bookNotes }) => {
 
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
-      {/* Hero Section - Added ID */}
+      {/* Hero Section */}
       <div
         id="hero"
         className="relative bg-gradient-to-b from-black to-[#0A0A0A] text-white"
       >
-        <div className="absolute top-5 left-[calc(16%)] pt-4 pl-4 z-10">
-          <BackButton />
+        <div className="absolute top-8 left-8 z-10">
+          <button
+            onClick={() => navigate(-1)}
+            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors duration-300"
+          >
+            <FontAwesomeIcon icon={faArrowLeft} className="text-sm" />
+            <span className="text-sm font-medium">Back</span>
+          </button>
         </div>
 
-        <div className="container mx-auto px-4 pt-40 pb-20">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Book Image */}
-            <div className="relative">
-              <img
-                src={book.image}
-                alt={book.title}
-                className="rounded-lg object-cover h-[40vh] mx-auto shadow-2xl"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-lg"></div>
-            </div>
-
-            {/* Book Info */}
-            <div className="mt-8 space-y-6">
-              <h1 className="text-4xl md:text-5xl font-karla font-bold">
-                {book.title}
-              </h1>
-              <div className="flex justify-center">
-                <StarSystem key={book.id} book={book} />
+        <div className="container mx-auto px-4 pt-24 pb-16">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-8 items-center">
+              {/* Book Image */}
+              <div className="w-full md:w-1/3">
+                <img
+                  src={book.image}
+                  alt={book.title}
+                  className="rounded-xl shadow-2xl w-full object-cover"
+                />
               </div>
-              <p className="text-xl md:text-2xl font-karla text-gray-300 max-w-2xl mx-auto">
-                {book.summary}
-              </p>
+
+              {/* Book Info */}
+              <div className="w-full md:w-2/3 space-y-4">
+                <h1 className="text-3xl md:text-4xl font-karla font-bold">
+                  {book.title}
+                </h1>
+                <h2 className="text-xl md:text-2xl text-gray-300 font-karla">
+                  {book.author}
+                </h2>
+                <div>
+                  <StarSystem book={book} />
+                </div>
+                <p className="text-gray-300 text-lg leading-relaxed">
+                  {book.summary}
+                </p>
+                <div className="flex items-center space-x-3 text-sm">
+                  <span className="bg-[#2A2A2A] px-3 py-1.5 rounded-full text-gray-300">
+                    {book.category}
+                  </span>
+                  <span className="bg-[#2A2A2A] px-3 py-1.5 rounded-full text-gray-300">
+                    {book.type}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -182,7 +202,7 @@ const BookDetails = ({ bookNotes }) => {
           id="notes"
           className="relative bg-gradient-to-b from-[#0A0A0A] to-[#141414] py-20"
         >
-          <div className="container mx-auto px-4 max-w-4xl">
+          <div className="container mx-auto px-4">
             {/* Enhanced separator */}
             <div className="absolute inset-x-0 top-0">
               <div className="h-px bg-gradient-to-r from-transparent via-gray-800 to-transparent"></div>
@@ -197,7 +217,9 @@ const BookDetails = ({ bookNotes }) => {
               </h2>
             </div>
 
-            <DetailedNotes notes={book.notes} />
+            <div className="max-w-6xl mx-auto">
+              <DetailedNotes notes={book.notes} />
+            </div>
           </div>
         </section>
 

@@ -15,7 +15,7 @@ function App() {
         setBookNotes(response.data); // Store the data in state
       })
       .catch((error) => {
-        console.error("Error fetching book notes:", error);
+        console.error("Error fetching notes:", error);
       });
   }, []);
 
