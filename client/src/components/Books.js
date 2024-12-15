@@ -1,140 +1,225 @@
-import React, { useState } from "react";
-import BookCard from "./BookCard";
-import Filter from "./Filter";
-import Search from "./Search";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faFilter, faSort } from "@fortawesome/free-solid-svg-icons";
+import {
+  faBook,
+  faGraduationCap,
+  faPodcast,
+  faNewspaper,
+  faSearch,
+  faFilter,
+  faSort,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+import BookCard from "./BookCard";
 
 const Books = ({ bookNotes }) => {
-  const [filter, setFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [isSearchVisible, setIsSearchVisible] = useState(false);
-  const [isFilterVisible, setIsFilterVisible] = useState(false);
-  const [sortAscending, setSortAscending] = useState(true);
+  const [filterType, setFilterType] = useState("all");
+  const [filterCategory, setFilterCategory] = useState("all");
+  const [sortAscending, setSortAscending] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  // Get unique categories from book notes
-  const categories = [...new Set(bookNotes.map((book) => book.category))];
+  useEffect(() => {
+    const uniqueCategories = [
+      ...new Set(bookNotes.map((book) => book.category)),
+    ];
+    setCategories(uniqueCategories);
+  }, [bookNotes]);
 
-  const toggleFilter = (category) => {
-    if (category === "All") {
-      // Always set to empty array (which means "All" is selected)
-      setFilter([]);
-      return;
-    }
-
-    // If all categories are about to be selected, switch to "All" (empty array)
-    const newFilter = filter.includes(category)
-      ? filter.filter((c) => c !== category)
-      : [...filter, category];
-
-    if (newFilter.length === categories.length) {
-      setFilter([]);
-    } else {
-      setFilter(newFilter);
+  const toggleSearch = () => {
+    console.log("Toggle clicked", isSearchExpanded);
+    setIsSearchExpanded(!isSearchExpanded);
+    if (isSearchExpanded) {
+      setSearchTerm("");
     }
   };
 
-  const filteredBooks = bookNotes
+  const filteredAndSortedBooks = [...bookNotes]
     .filter((book) => {
-      // Search in both title and author
       const matchesSearch =
         !searchTerm ||
         book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         book.author.toLowerCase().includes(searchTerm.toLowerCase());
 
-      // Filter by category
-      const matchesFilter =
-        filter.length === 0 || filter.includes(book.category);
+      const matchesType = filterType === "all" || book.type === filterType;
+      const matchesCategory =
+        filterCategory === "all" || book.category === filterCategory;
 
-      // Both conditions must be true
-      return matchesSearch && matchesFilter;
+      return matchesSearch && matchesType && matchesCategory;
     })
-    .sort((a, b) => {
-      return sortAscending ? a.rating - b.rating : b.rating - a.rating;
-    });
+    .sort((a, b) =>
+      sortAscending ? a.rating - b.rating : b.rating - a.rating
+    );
 
   return (
     <div className="min-h-screen bg-black py-12 px-4">
-      {/* Header Controls */}
-      <div className="max-w-7xl mx-auto mb-12">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-4xl font-karla font-bold text-white">
-            Knowledge Vault
-          </h1>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => {
-                setIsSearchVisible(!isSearchVisible);
-                setIsFilterVisible(false);
-              }}
-              className={`p-3 rounded-full transition-all duration-300 ${
-                searchTerm || isSearchVisible
-                  ? "bg-white text-black"
-                  : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
-              }`}
-            >
-              <FontAwesomeIcon icon={faSearch} />
-            </button>
-            <button
-              onClick={() => {
-                setIsFilterVisible(!isFilterVisible);
-                setIsSearchVisible(false);
-              }}
-              className={`p-3 rounded-full transition-all duration-300 ${
-                isFilterVisible
-                  ? "bg-white text-black"
-                  : "bg-[#2A2A2A] text-white hover:bg-[#3A3A3A]"
-              }`}
-            >
-              <FontAwesomeIcon icon={faFilter} />
-            </button>
-            <button
-              onClick={() => setSortAscending(!sortAscending)}
-              className="p-3 rounded-full bg-[#2A2A2A] text-white hover:bg-[#3A3A3A] transition-all duration-300"
-              title={
-                sortAscending
-                  ? "Sort by rating (high to low)"
-                  : "Sort by rating (low to high)"
-              }
-            >
-              <FontAwesomeIcon
-                icon={faSort}
-                className={`transform transition-all duration-300 ${
-                  !sortAscending ? "rotate-180" : ""
-                }`}
-              />
-            </button>
+      <div className="max-w-7xl mx-auto mb-16">
+        {/* Hero section */}
+        <div className="relative">
+          <div className="absolute inset-0 overflow-hidden">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/5 rounded-full animate-pulse blur-3xl"></div>
+            <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full animate-pulse delay-700 blur-3xl"></div>
+          </div>
+
+          <div className="relative z-10 text-center py-20">
+            <h1 className="text-5xl md:text-6xl font-karla font-bold text-white mb-4 tracking-tight">
+              Knowledge Vault
+            </h1>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto font-karla">
+              Your personal library of insights from books, courses, podcasts,
+              and articles.
+            </p>
+
+            <div className="flex justify-center gap-12 mt-12">
+              <div className="transition-all duration-300 hover:scale-110 hover:-translate-y-1 group">
+                <FontAwesomeIcon
+                  icon={faBook}
+                  className="text-white/30 group-hover:text-white text-3xl transition-colors duration-300"
+                />
+              </div>
+              <div className="transition-all duration-300 hover:scale-110 hover:-translate-y-1 group">
+                <FontAwesomeIcon
+                  icon={faGraduationCap}
+                  className="text-white/30 group-hover:text-white text-3xl transition-colors duration-300"
+                />
+              </div>
+              <div className="transition-all duration-300 hover:scale-110 hover:-translate-y-1 group">
+                <FontAwesomeIcon
+                  icon={faPodcast}
+                  className="text-white/30 group-hover:text-white text-3xl transition-colors duration-300"
+                />
+              </div>
+              <div className="transition-all duration-300 hover:scale-110 hover:-translate-y-1 group">
+                <FontAwesomeIcon
+                  icon={faNewspaper}
+                  className="text-white/30 group-hover:text-white text-3xl transition-colors duration-300"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Expandable Search */}
-        <div
-          className={`transition-all duration-300 overflow-hidden ${
-            isSearchVisible ? "max-h-20 opacity-100 mb-8" : "max-h-0 opacity-0"
-          }`}
-        >
-          <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        </div>
+        {/* Controls */}
+        <div className="relative z-20 flex flex-col md:flex-row gap-4 mt-12">
+          {/* Search */}
+          <div className="flex-1">
+            <div className="relative h-12">
+              <div
+                className={`
+                  absolute left-0 top-0
+                  bg-[#2A2A2A] rounded-xl h-12
+                  transition-all duration-300 ease-in-out
+                  ${isSearchExpanded ? "w-full" : "w-12"}
+                `}
+                style={{
+                  width: isSearchExpanded ? "100%" : "48px",
+                }}
+              >
+                <button
+                  onClick={toggleSearch}
+                  className="absolute left-0 top-0 w-12 h-12 flex items-center justify-center text-gray-400 hover:text-white z-20"
+                >
+                  <FontAwesomeIcon icon={faSearch} className="w-4 h-4" />
+                </button>
 
-        {/* Expandable Filter */}
-        <div
-          className={`transition-all duration-300 overflow-hidden ${
-            isFilterVisible ? "max-h-20 opacity-100 mb-8" : "max-h-0 opacity-0"
-          }`}
-        >
-          <Filter
-            toggleFilter={toggleFilter}
-            filter={filter}
-            categories={categories}
-          />
+                <div
+                  className={`
+                    transition-opacity duration-300
+                    ${
+                      isSearchExpanded
+                        ? "opacity-100"
+                        : "opacity-0 pointer-events-none"
+                    }
+                  `}
+                >
+                  <input
+                    type="text"
+                    placeholder="Search by title or author..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="bg-transparent text-white w-full h-12 px-4 py-3 pl-12 focus:outline-none placeholder-gray-500"
+                  />
+
+                  {searchTerm && (
+                    <button
+                      onClick={toggleSearch}
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-white z-10"
+                    >
+                      <FontAwesomeIcon icon={faTimes} />
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Category Filter */}
+          <div className="relative">
+            <select
+              value={filterCategory}
+              onChange={(e) => setFilterCategory(e.target.value)}
+              className="appearance-none bg-[#2A2A2A] text-white rounded-xl px-12 py-3 focus:outline-none focus:ring-2 focus:ring-white/20"
+            >
+              <option value="all">All Categories</option>
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </option>
+              ))}
+            </select>
+            <FontAwesomeIcon
+              icon={faFilter}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+          </div>
+
+          {/* Type Filter */}
+          <div className="relative">
+            <select
+              value={filterType}
+              onChange={(e) => setFilterType(e.target.value)}
+              className="appearance-none bg-[#2A2A2A] text-white rounded-xl px-12 py-3 focus:outline-none focus:ring-2 focus:ring-white/20"
+            >
+              <option value="all">All Types</option>
+              <option value="book">Books</option>
+              <option value="course">Courses</option>
+              <option value="podcast">Podcasts</option>
+              <option value="article">Articles</option>
+            </select>
+            <FontAwesomeIcon
+              icon={faFilter}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+          </div>
+
+          {/* Sort */}
+          <div className="relative">
+            <select
+              value={sortAscending ? "asc" : "desc"}
+              onChange={(e) => setSortAscending(e.target.value === "asc")}
+              className="appearance-none bg-[#2A2A2A] text-white rounded-xl px-12 py-3 focus:outline-none focus:ring-2 focus:ring-white/20"
+            >
+              <option value="desc">Highest Rated</option>
+              <option value="asc">Lowest Rated</option>
+            </select>
+            <FontAwesomeIcon
+              icon={faSort}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Books Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredBooks.map((book) => (
-          <BookCard key={book.id} book={book} />
-        ))}
+      {/* Book Grid */}
+      <div className="max-w-7xl mx-auto">
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+          {filteredAndSortedBooks.map((book) => (
+            <div key={book.id || Math.random()} className="break-inside-avoid">
+              <BookCard book={book} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
