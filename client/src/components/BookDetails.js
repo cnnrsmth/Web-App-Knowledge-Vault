@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import TakeawayCard from "./TakeawayCard";
 import StarSystem from "./StarSystem";
@@ -6,11 +6,20 @@ import QuoteCard from "./QuoteCard";
 import DetailedNotes from "./DetailedNotes";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { createSlug } from "../utils/helpers";
 
 const BookDetails = ({ bookNotes }) => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const navigate = useNavigate();
-  const book = bookNotes.find((book) => book.id === id);
+
+  // Find book by matching slugified title
+  const book = bookNotes.find((book) => createSlug(book.title) === slug);
+
+  useEffect(() => {
+    if (!book && bookNotes.length > 0) {
+      navigate("/knowledge-vault");
+    }
+  }, [book, bookNotes, navigate]);
 
   if (!book) {
     return (

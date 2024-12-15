@@ -16,6 +16,17 @@ const NoteSection = ({
     triggerOnce: true,
   });
 
+  const [isFlashing, setIsFlashing] = useState(false);
+
+  // Handle flash animation when expanded
+  useEffect(() => {
+    if (expandedNotes.has(section)) {
+      setIsFlashing(true);
+      const timer = setTimeout(() => setIsFlashing(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [expandedNotes, section]);
+
   return (
     <div
       ref={ref}
@@ -24,7 +35,12 @@ const NoteSection = ({
         ${isInView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-20"}
       `}
     >
-      <div className="bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl">
+      <div
+        className={`
+          bg-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl
+          ${isFlashing ? "animate-flash" : ""}
+        `}
+      >
         <div className="px-6 py-4">
           <h3 className="text-white text-xl font-bold mb-4">{section}</h3>
           <div

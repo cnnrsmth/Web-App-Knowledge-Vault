@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import StarSystemLight from "./StarSystemLight";
 import OverlayIcon from "./OverlayIcon";
 import useInView from "../hooks/useInView";
+import { createSlug } from "../utils/helpers";
 
 const BookCard = ({ book }) => {
   const navigate = useNavigate();
@@ -14,7 +15,8 @@ const BookCard = ({ book }) => {
   });
 
   const handleClick = () => {
-    navigate(`/books/${book.id}`);
+    const slug = createSlug(book.title);
+    navigate(`/books/${slug}`);
   };
 
   return (

@@ -14,6 +14,25 @@ export default {
         karla: ["Karla"],
         roboto: ["Roboto"],
       },
+      animation: {
+        float: "float 3s ease-in-out infinite",
+        pulse: "pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite",
+        flash: "flash 0.5s ease-in-out",
+      },
+      keyframes: {
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+        flash: {
+          "0%": { backgroundColor: "#2A2A2A" },
+          "50%": { backgroundColor: "#3B3B3B" },
+          "100%": { backgroundColor: "#2A2A2A" },
+        },
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+      },
     },
   },
   plugins: [],
