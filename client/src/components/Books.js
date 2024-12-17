@@ -10,6 +10,7 @@ import {
   faSort,
   faTimes,
 } from "@fortawesome/free-solid-svg-icons";
+import LandingAnimation from "./LandingAnimation";
 import BookCard from "./BookCard";
 
 const Books = ({ bookNotes }) => {
